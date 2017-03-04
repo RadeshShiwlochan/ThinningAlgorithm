@@ -70,21 +70,22 @@ public class ThinningAlgrthm {
 	public void prettyPrint(String outputFile) {
 		
 		try {
-		int pixel_value;
-		PrintWriter  printToFile = new PrintWriter(new File(outputFile));
-		//read in the input file
-		for(int i = 1; i <= numRows; i++) {
-			for(int j = 1; j <= numCols ; j++) {
-				pixel_value = firstAry[i][j];
-				if(pixel_value > 0) 
-					printToFile.print(pixel_value + " ");
-				//printToFile.print(" ");
+			int pixel_value;
+			PrintWriter  printToFile = new PrintWriter(new File(outputFile));
+			//read in the input file
+			for(int i = 1; i <= numRows; i++) {
+				for(int j = 1; j <= numCols ; j++) {
+					pixel_value = firstAry[i][j];
+				    if(pixel_value == 1) 
+						printToFile.print(pixel_value + " ");
+					else 
+					    printToFile.print("  ");
+				}
+				printToFile.println();
 			}
 			printToFile.println();
-		}
-		printToFile.println();
-		printToFile.flush();
-		printToFile.close();
+			printToFile.flush();
+			printToFile.close();
 		}catch(IOException ioe) {
 			System.out.println(ioe);
 		}
