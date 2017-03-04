@@ -6,8 +6,8 @@ public class ThinningAlgrthm {
 	private int numCols;
 	private int minVal;
 	private int maxVal;
-	private int[][] firstAry;
-	private int[][] secondAry;
+	protected int[][] firstAry;
+	protected int[][] secondAry;
 	private boolean changeflag;
 	private int cycleCount;
 	
@@ -23,8 +23,8 @@ public class ThinningAlgrthm {
 			firstAry = new int[rowSize][colSize];
 			secondAry = new int[rowSize][colSize];
 			
-			for(int i = 0; i <= rowSize; ++i) {
-				for(int j = 0; j <= colSize; ++j) {
+			for(int i = 0; i < rowSize; ++i) {
+				for(int j = 0; j < colSize; ++j) {
 					firstAry[i][j] = 0;
 					secondAry[i][j] = 0;
 				}
@@ -36,7 +36,7 @@ public class ThinningAlgrthm {
 	}//constructor
 	
 	public void zeroFramed(int[][] array) {
-		for(int i = 0; i <= numRows + 1; i++) {
+		for(int i = 0; i <= numRows +1; i++) {
 			array[i][0]           = array[i][1];
 			array[i][numCols + 1] = array[i][numCols];
 		}
@@ -45,6 +45,42 @@ public class ThinningAlgrthm {
 			 array[0][j]           = array[1][j];
 			 array[numRows + 1][j] = array[numRows][j];
 		}
-	}
+	}//zeroFramed
+	
+	public void printFirstArr(String outputFile) {
+		try {
+			PrintWriter printToFile 
+						= new PrintWriter(new File(outputFile));
+			int rowSize = numRows + 2, colSize = numCols + 2;
+			for(int i = 0; i < rowSize; ++i) {
+				for(int j = 0; j < colSize; ++j) {
+					printToFile.print(firstAry[i][j] + " ");
+				}
+				printToFile.println();
+			}
+			printToFile.flush();
+			printToFile.close();
+		}catch(IOException ioe) {
+				System.out.println(ioe);
+			}
+	}//printFirstArr
+	
+	public void printsecondtArr(String outputFile2) {
+		try {
+			PrintWriter printnum 
+						= new PrintWriter(new File(outputFile2));
+			int rowSize = numRows + 2, colSize = numCols + 2;
+			for(int i = 0; i < rowSize; ++i) {
+				for(int j = 0; j < colSize; ++j) {
+					printnum.print(secondAry[i][j] + " ");
+				}
+				printnum.println();
+			}
+			printnum.flush();
+			printnum.close();
+		}catch(IOException ioe) {
+			System.out.println(ioe);
+		}
+	}//printFirstArr
 	
 }
