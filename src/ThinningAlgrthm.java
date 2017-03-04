@@ -47,6 +47,49 @@ public class ThinningAlgrthm {
 		}
 	}//zeroFramed
 	
+	public void loadImage(String inputFile ) {
+		try {
+			Scanner readFile = new Scanner(new File(inputFile));
+			int pixel_val = -1;
+			
+			for(int x = 0; x <= 3; x++)
+				pixel_val = readFile.nextInt();
+			
+			for(int i = 1; i <= numRows; ++i) {
+				for(int j = 1; j <= numCols; j++) {
+					pixel_val = readFile.nextInt();
+					firstAry[i][j] = pixel_val;
+			    }
+			}
+			readFile.close();
+		} catch (IOException exc) {
+			System.out.println(exc);
+		}
+	}
+	
+	public void prettyPrint(String outputFile) {
+		
+		try {
+		int pixel_value;
+		PrintWriter  printToFile = new PrintWriter(new File(outputFile));
+		//read in the input file
+		for(int i = 1; i <= numRows; i++) {
+			for(int j = 1; j <= numCols ; j++) {
+				pixel_value = firstAry[i][j];
+				if(pixel_value > 0) 
+					printToFile.print(pixel_value + " ");
+				//printToFile.print(" ");
+			}
+			printToFile.println();
+		}
+		printToFile.println();
+		printToFile.flush();
+		printToFile.close();
+		}catch(IOException ioe) {
+			System.out.println(ioe);
+		}
+	}//prettyPrint method
+	
 	public void printFirstArr(String outputFile) {
 		try {
 			PrintWriter printToFile 
