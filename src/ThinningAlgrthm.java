@@ -73,8 +73,8 @@ public class ThinningAlgrthm {
 			int pixel_value;
 			PrintWriter  printToFile = new PrintWriter(new File(outputFile));
 			//read in the input file
-			for(int i = 1; i <= numRows; i++) {
-				for(int j = 1; j <= numCols ; j++) {
+			for(int i = 1; i <= numRows + 1; i++) {
+				for(int j = 1; j <= numCols + 1; j++) {
 					pixel_value = firstAry[i][j];
 				    if(pixel_value == 1) 
 						printToFile.print(pixel_value + " ");
@@ -99,8 +99,10 @@ public class ThinningAlgrthm {
 		for(int i = 1; i < numRows + 2; ++i) {
 			for(int j = 1; j < numCols + 2; ++j) {
 				if(firstAry[i][i] > 1 && 
-				   firstAry[i - 1][j] == 0)
+				   firstAry[i - 1][j] == 0) {
 					DoThinning(i,j);
+					break;
+				}
 			}
 		}
 	}
@@ -109,8 +111,10 @@ public class ThinningAlgrthm {
 		for(int i = 1; i < numRows + 2; ++i) {
 			for(int j = 1; j < numCols + 2; ++j) {
 				if(firstAry[i][i] > 1 &&
-				   firstAry[i + 1][j] == 0)
+				   firstAry[i + 1][j] == 0) {
 					DoThinning(i,j);
+					break;
+				}
 			}
 		}
 	}
@@ -119,8 +123,10 @@ public class ThinningAlgrthm {
 		for(int i = 1; i < numRows + 2; ++i) {
 			for(int j = 1; j < numCols + 2; ++j) {
 				if(firstAry[i][i] > 1 && 
-				   firstAry[i-1][j] == 0)
+				   firstAry[i][j + 1] == 0) {
 					DoThinning(i,j);
+					break;
+				}
 			}
 		}
 	}
@@ -129,8 +135,10 @@ public class ThinningAlgrthm {
 		for(int i = 1; i < numRows + 2; ++i) {
 			for(int j = 1; j < numCols + 2; ++j) {
 				if(firstAry[i][i] > 1 && 
-				   firstAry[i-1][j] == 0)
+				   firstAry[i][j - 1] == 0) {
 					DoThinning(i,j);
+					break;
+				}
 			}
 		}	
 	}
@@ -143,6 +151,32 @@ public class ThinningAlgrthm {
 //			}
 //		}
 	}
+	
+	public boolean checkNghbrsNotZero(int rowIndex, int colIndex) {
+		int counter = 0;
+		if(firstAry[rowIndex - 1][colIndex - 1] > 1)
+			counter++;
+		if(firstAry[rowIndex - 1][colIndex] > 1)
+			counter++;
+		if(firstAry[rowIndex - 1][colIndex + 1] > 1)
+			counter++;
+		if(firstAry[rowIndex][colIndex - 1] > 1)
+			counter++;
+		if(firstAry[rowIndex][colIndex] > 1)
+			counter++;
+		if(firstAry[rowIndex][colIndex + 1] > 1)
+			counter++;
+		if(firstAry[rowIndex + 1][colIndex - 1] > 1)
+			counter++;
+		if(firstAry[rowIndex + 1][colIndex] > 1)
+			counter++;
+		if(firstAry[rowIndex + 1][colIndex + 1] > 1)
+			counter++;
+		if(counter >= 3)
+			return true;
+		return false;
+	}
+	
 	public void printFirstArr(String outputFile) {
 		try {
 			PrintWriter printToFile 
