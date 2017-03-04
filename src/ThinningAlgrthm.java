@@ -91,6 +91,58 @@ public class ThinningAlgrthm {
 		}
 	}//prettyPrint method
 	
+	public void DoThinning(int rowIndex, int colIndex) {
+		
+	}
+	
+	public void NorthThinning() {
+		for(int i = 1; i < numRows + 2; ++i) {
+			for(int j = 1; j < numCols + 2; ++j) {
+				if(firstAry[i][i] > 1 && 
+				   firstAry[i - 1][j] == 0)
+					DoThinning(i,j);
+			}
+		}
+	}
+	
+	public void SouthThinning() {
+		for(int i = 1; i < numRows + 2; ++i) {
+			for(int j = 1; j < numCols + 2; ++j) {
+				if(firstAry[i][i] > 1 &&
+				   firstAry[i + 1][j] == 0)
+					DoThinning(i,j);
+			}
+		}
+	}
+	
+	public void EastThinning() {
+		for(int i = 1; i < numRows + 2; ++i) {
+			for(int j = 1; j < numCols + 2; ++j) {
+				if(firstAry[i][i] > 1 && 
+				   firstAry[i-1][j] == 0)
+					DoThinning(i,j);
+			}
+		}
+	}
+	
+	public void WestThinning() {
+		for(int i = 1; i < numRows + 2; ++i) {
+			for(int j = 1; j < numCols + 2; ++j) {
+				if(firstAry[i][i] > 1 && 
+				   firstAry[i-1][j] == 0)
+					DoThinning(i,j);
+			}
+		}	
+	}
+	
+	public void copyAry() {
+		firstAry = secondAry;
+//		for(int i = 0; i < numRows + 2; ++i) {
+//			for(int j = 0; j < numCols + 2; ++j) {
+//				firstAry[i][j] = secondAry[i][j];
+//			}
+//		}
+	}
 	public void printFirstArr(String outputFile) {
 		try {
 			PrintWriter printToFile 
