@@ -177,6 +177,20 @@ public class ThinningAlgrthm {
 		return false;
 	}
 	
+	public int[] loadNghbrs(int rowIndex, int colIndex) {
+		int nghbrArr[] = new int[9];
+		nghbrArr[0] = firstAry[rowIndex - 1][colIndex - 1]; 
+		nghbrArr[1] = firstAry[rowIndex - 1][colIndex];
+		nghbrArr[2] = firstAry[rowIndex - 1][colIndex + 1];
+		nghbrArr[3] = firstAry[rowIndex][colIndex - 1];
+		nghbrArr[4] = firstAry[rowIndex][colIndex];
+		nghbrArr[5] = firstAry[rowIndex][colIndex + 1];
+		nghbrArr[6] = firstAry[rowIndex + 1][colIndex - 1];
+		nghbrArr[7] = firstAry[rowIndex + 1][colIndex];
+		nghbrArr[8] = firstAry[rowIndex + 1][colIndex + 1];
+		return nghbrArr;
+	}
+	
 	public void printFirstArr(String outputFile) {
 		try {
 			PrintWriter printToFile 
