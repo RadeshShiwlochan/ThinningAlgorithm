@@ -8,7 +8,7 @@ public class ThinningAlgrthm {
 	private int maxVal;
 	protected int[][] firstAry;
 	protected int[][] secondAry;
-	private boolean changeflag;
+	private boolean changeFlag;
 	private int cycleCount;
 	
 	public ThinningAlgrthm(String inputFile) {
@@ -92,6 +92,13 @@ public class ThinningAlgrthm {
 	}//prettyPrint method
 	
 	public void DoThinning(int rowIndex, int colIndex) {
+		//check the second condition of if making the 
+		//pixel zero will create 2 connected components
+		if(checkNghbrsNotZero(rowIndex,colIndex)) {
+			secondAry[rowIndex][colIndex] = 0;
+			changeFlag = true;
+		}
+		
 		
 	}
 	
@@ -101,7 +108,7 @@ public class ThinningAlgrthm {
 				if(firstAry[i][i] > 1 && 
 				   firstAry[i - 1][j] == 0) {
 					DoThinning(i,j);
-					break;
+					copyAry();
 				}
 			}
 		}
@@ -144,37 +151,42 @@ public class ThinningAlgrthm {
 	}
 	
 	public void copyAry() {
-		firstAry = secondAry;
-//		for(int i = 0; i < numRows + 2; ++i) {
-//			for(int j = 0; j < numCols + 2; ++j) {
-//				firstAry[i][j] = secondAry[i][j];
-//			}
-//		}
+		//firstAry = secondAry;
+		for(int i = 0; i < numRows + 2; ++i) {
+			for(int j = 0; j < numCols + 2; ++j) {
+				firstAry[i][j] = secondAry[i][j];
+			}
+		}
 	}
 	
 	public boolean checkNghbrsNotZero(int rowIndex, int colIndex) {
 		int counter = 0;
-		if(firstAry[rowIndex - 1][colIndex - 1] > 1)
-			counter++;
-		if(firstAry[rowIndex - 1][colIndex] > 1)
-			counter++;
-		if(firstAry[rowIndex - 1][colIndex + 1] > 1)
-			counter++;
-		if(firstAry[rowIndex][colIndex - 1] > 1)
-			counter++;
-		if(firstAry[rowIndex][colIndex] > 1)
-			counter++;
-		if(firstAry[rowIndex][colIndex + 1] > 1)
-			counter++;
-		if(firstAry[rowIndex + 1][colIndex - 1] > 1)
-			counter++;
-		if(firstAry[rowIndex + 1][colIndex] > 1)
-			counter++;
-		if(firstAry[rowIndex + 1][colIndex + 1] > 1)
-			counter++;
-		if(counter >= 3)
-			return true;
-		return false;
+		int [] nghbrArr = loadNghbrs(rowIndex,colIndex);
+		for(int i = 0; i < 9; ++i) {
+			if(nghbrArr[i] > 0)
+				counter++;
+		}
+		
+		if(counter == 3) {
+			if(nghbrArr[6] == 1 && nghbrArr[8] == 1 ||
+			   nghbrArr[6] == 1 && nghbrArr[5] == 1 ||
+			   nghbrArr[3] == 1 && nghbrArr[8] == 1 ||
+			   nghbrArr[3] == 1 && nghbrArr[5] == 1   )
+				return false;
+			
+		} else if(counter == 4) {
+			if(nghbrArr[3] == 1 && nghbrArr[5] == 1 && nghbrArr[6] == 1 ||
+			   nghbrArr[3] == 1 && nghbrArr[5] == 1 && nghbrArr[8] == 1 ||
+			   nghbrArr[6] == 1 && nghbrArr[5] == 1 && nghbrArr[8] == 1 ||
+			   nghbrArr[3] == 1 && nghbrArr[6] == 1 && nghbrArr[8] == 1   )
+			   return false;
+			
+		} else if(counter == 5) {
+			if(nghbrArr[3] == 1 && nghbrArr[5] == 1 && nghbrArr[6] == 1 &&
+				nghbrArr[8] == 1)
+				return false;
+		} 
+		return true;
 	}
 	
 	public int[] loadNghbrs(int rowIndex, int colIndex) {
