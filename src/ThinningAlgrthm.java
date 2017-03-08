@@ -99,9 +99,7 @@ public class ThinningAlgrthm {
 			System.out.println("RowIndex: " + rowIndex + " colIndex: " + colIndex);
 			firstAry[rowIndex][colIndex] = 0;
 			changeFlag = true;
-		}
-		
-		
+		}	
 	}
 	
 	public void NorthThinning() {
@@ -168,29 +166,41 @@ public class ThinningAlgrthm {
 		System.out.println(nghbrArr[0] + " " + nghbrArr[1] + " " + nghbrArr[2]);
 		System.out.println(nghbrArr[3] + " " + nghbrArr[4] + " " + nghbrArr[5]);
 		System.out.println(nghbrArr[6] + " " + nghbrArr[7] + " " + nghbrArr[8]);
+		
 		for(int i = 0; i < 9; ++i) {
 			if(nghbrArr[i] > 0)
 				counter++;
 		}
+		System.out.println("this is counter: " + counter);
+		if(counter < 3) {
+			System.out.println("Returning false ===>");
+			return false;
+		}
 		
-		if(counter == 3) {
+		if(counter >= 3) {
 			if(nghbrArr[6] == 1 && nghbrArr[8] == 1 ||
 			   nghbrArr[6] == 1 && nghbrArr[5] == 1 ||
 			   nghbrArr[3] == 1 && nghbrArr[8] == 1 ||
-			   nghbrArr[3] == 1 && nghbrArr[5] == 1   )
+			   nghbrArr[3] == 1 && nghbrArr[5] == 1   ) {
+				System.out.println("Returning false");
 				return false;
+			}
 			
 		} else if(counter == 4) {
 			if(nghbrArr[3] == 1 && nghbrArr[5] == 1 && nghbrArr[6] == 1 ||
 			   nghbrArr[3] == 1 && nghbrArr[5] == 1 && nghbrArr[8] == 1 ||
 			   nghbrArr[6] == 1 && nghbrArr[5] == 1 && nghbrArr[8] == 1 ||
-			   nghbrArr[3] == 1 && nghbrArr[6] == 1 && nghbrArr[8] == 1   )
+			   nghbrArr[3] == 1 && nghbrArr[6] == 1 && nghbrArr[8] == 1   ) {
+				System.out.println("Returning false");
 			   return false;
+			}
 			
 		} else if(counter == 5) {
 			if(nghbrArr[3] == 1 && nghbrArr[5] == 1 && nghbrArr[6] == 1 &&
-				nghbrArr[8] == 1)
+				nghbrArr[8] == 1) {
+				System.out.println("Returning false");
 				return false;
+			}
 		} 
 		return true;
 	}
