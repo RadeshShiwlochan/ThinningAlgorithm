@@ -94,8 +94,10 @@ public class ThinningAlgrthm {
 	public void DoThinning(int rowIndex, int colIndex) {
 		//check the second condition of if making the 
 		//pixel zero will create 2 connected components
+		
 		if(checkNghbrsNotZero(rowIndex,colIndex)) {
-			secondAry[rowIndex][colIndex] = 0;
+			System.out.println("RowIndex: " + rowIndex + " colIndex: " + colIndex);
+			firstAry[rowIndex][colIndex] = 0;
 			changeFlag = true;
 		}
 		
@@ -105,10 +107,11 @@ public class ThinningAlgrthm {
 	public void NorthThinning() {
 		for(int i = 1; i < numRows + 2; ++i) {
 			for(int j = 1; j < numCols + 2; ++j) {
-				if(firstAry[i][i] > 1 && 
+				if(firstAry[i][j] == 1 && 
 				   firstAry[i - 1][j] == 0) {
+					System.out.println("In NorthThinning: " + i + " " + j);
 					DoThinning(i,j);
-					copyAry();
+					//copyAry();
 				}
 			}
 		}
@@ -162,6 +165,9 @@ public class ThinningAlgrthm {
 	public boolean checkNghbrsNotZero(int rowIndex, int colIndex) {
 		int counter = 0;
 		int [] nghbrArr = loadNghbrs(rowIndex,colIndex);
+		System.out.println(nghbrArr[0] + " " + nghbrArr[1] + " " + nghbrArr[2]);
+		System.out.println(nghbrArr[3] + " " + nghbrArr[4] + " " + nghbrArr[5]);
+		System.out.println(nghbrArr[6] + " " + nghbrArr[7] + " " + nghbrArr[8]);
 		for(int i = 0; i < 9; ++i) {
 			if(nghbrArr[i] > 0)
 				counter++;
@@ -237,6 +243,18 @@ public class ThinningAlgrthm {
 		}catch(IOException ioe) {
 			System.out.println(ioe);
 		}
+	}//printFirstArr
+	
+	public void printy() {
+		
+			int rowSize = numRows + 2, colSize = numCols + 2;
+			for(int i = 0; i < rowSize; ++i) {
+				for(int j = 0; j < colSize; ++j) {
+					System.out.print(firstAry[i][j] + " ");
+				}
+				System.out.println();
+			}
+			
 	}//printFirstArr
 	
 }
