@@ -178,30 +178,32 @@ public class ThinningAlgrthm {
 		}
 		
 		if(counter >= 3) {
-			if(nghbrArr[6] == 1 && nghbrArr[8] == 1 ||
-			   nghbrArr[6] == 1 && nghbrArr[5] == 1 ||
-			   nghbrArr[3] == 1 && nghbrArr[8] == 1 ||
-			   nghbrArr[3] == 1 && nghbrArr[5] == 1   ) {
+			if(nghbrArr[0] == 1 && nghbrArr[8] == 1 ||
+			   nghbrArr[1] == 1 && nghbrArr[7] == 1 ||
+			   nghbrArr[2] == 1 && nghbrArr[6] == 1 ||
+			   nghbrArr[3] == 1 && nghbrArr[5] == 1 ||  
+			   nghbrArr[0] == 1 && nghbrArr[6] == 1 && nghbrArr[3] == 0 ||
+			   nghbrArr[2] == 1 && nghbrArr[8] == 1 && nghbrArr[5] == 0 ||
+			   nghbrArr[6] == 1 && nghbrArr[8] == 1 && nghbrArr[7] == 0 ||
+			   nghbrArr[0] == 1 && nghbrArr[2] == 1 && nghbrArr[1] == 0 ||
+			   
+			   nghbrArr[1] == 1 && nghbrArr[6] == 1 && nghbrArr[3] == 0 ||
+			   nghbrArr[1] == 1 && nghbrArr[8] == 1 && nghbrArr[5] == 0 ||
+			   nghbrArr[0] == 1 && nghbrArr[7] == 1 && nghbrArr[3] == 0 ||
+			   nghbrArr[2] == 1 && nghbrArr[7] == 1 && nghbrArr[5] == 0 ||
+			   
+			   nghbrArr[2] == 1 && nghbrArr[3] == 1 && nghbrArr[1] == 0 ||
+			   nghbrArr[2] == 1 && nghbrArr[8] == 1 && nghbrArr[7] == 0 ||
+			   nghbrArr[0] == 1 && nghbrArr[5] == 1 && nghbrArr[1] == 0 ||
+			   nghbrArr[6] == 1 && nghbrArr[5] == 1 && nghbrArr[7] == 0 		
+		
+					) {
 				System.out.println("Returning false");
 				return false;
 			}
 			
-		} else if(counter == 4) {
-			if(nghbrArr[3] == 1 && nghbrArr[5] == 1 && nghbrArr[6] == 1 ||
-			   nghbrArr[3] == 1 && nghbrArr[5] == 1 && nghbrArr[8] == 1 ||
-			   nghbrArr[6] == 1 && nghbrArr[5] == 1 && nghbrArr[8] == 1 ||
-			   nghbrArr[3] == 1 && nghbrArr[6] == 1 && nghbrArr[8] == 1   ) {
-				System.out.println("Returning false");
-			   return false;
-			}
-			
-		} else if(counter == 5) {
-			if(nghbrArr[3] == 1 && nghbrArr[5] == 1 && nghbrArr[6] == 1 &&
-				nghbrArr[8] == 1) {
-				System.out.println("Returning false");
-				return false;
-			}
 		} 
+		System.out.println("Returning true for row: " + rowIndex + " col" + colIndex);
 		return true;
 	}
 	
