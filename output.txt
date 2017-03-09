@@ -1,3 +1,5 @@
+Final Result of the Thinning Algorithm
+
 31  41  0  1
 
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
