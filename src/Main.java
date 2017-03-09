@@ -17,8 +17,9 @@ public class Main extends ThinningAlgrthm {
 		thinningAlg.prettyPrint(outputFile2);
 		
 		thinningAlg.NorthThinning();
+		thinningAlg.SouthThinning();
 		thinningAlg.printFirstArr(outputFile);
 		thinningAlg.printsecondtArr(outputFile2);
-		//thinningAlg.printy();
+		thinningAlg.printy();
 	}
 }

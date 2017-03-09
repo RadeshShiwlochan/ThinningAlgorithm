@@ -120,12 +120,20 @@ public class ThinningAlgrthm {
 		}
 		
 		if(counter == 5 || counter == 6 ) {
+			if(nghbrArr[2] == 1 && nghbrArr[8] == 1 && nghbrArr[5] == 1 || nghbrArr[1] == 1) {
+				System.out.println("Returning true for row: " + rowIndex + " col" + colIndex + " @@@@@@@@@");
+				return true;
+			}
+		}
+		
+		if(counter == 5 || counter == 6 ) {
 			if(nghbrArr[0] == 1 && nghbrArr[8] == 1 && nghbrArr[7] == 0 ||
 			   nghbrArr[1] == 1 && nghbrArr[7] == 1 ||
 			   nghbrArr[2] == 1 && nghbrArr[6] == 1 && nghbrArr[7] == 0 ||
 			   nghbrArr[3] == 1 && nghbrArr[5] == 1 && nghbrArr[7] == 0 ||  
 			   nghbrArr[0] == 1 && nghbrArr[6] == 1 && nghbrArr[3] == 0 ||
 			   nghbrArr[2] == 1 && nghbrArr[8] == 1 && nghbrArr[5] == 0 ||
+			   nghbrArr[2] == 1 && nghbrArr[8] == 1 && nghbrArr[5] == 0 || nghbrArr[1] == 0 ||
 			   nghbrArr[6] == 1 && nghbrArr[8] == 1 && nghbrArr[7] == 0 ||
 			   nghbrArr[0] == 1 && nghbrArr[2] == 1 && nghbrArr[1] == 0 ||
 			   
@@ -148,7 +156,8 @@ public class ThinningAlgrthm {
 		}
 		
 		if(counter == 4) {
-			if(nghbrArr[2] == 1 && nghbrArr[8] == 1 && nghbrArr[4] == 1) {
+			if(nghbrArr[2] == 1 && nghbrArr[8] == 1 && nghbrArr[4] == 1 ||
+			   nghbrArr[0] == 1 && nghbrArr[4] == 1 && nghbrArr[2] == 1	  ) {
 				System.out.println("Returning true for row: " + rowIndex + " col" + colIndex + " @@@@@@@@@");
 				return true;
 			}
@@ -190,26 +199,28 @@ public class ThinningAlgrthm {
 	public void NorthThinning() {
 		for(int i = 1; i < numRows + 2; ++i) {
 			for(int j = 1; j < numCols + 2; ++j) {
-				if(firstAry[i][j] == 1 && 
+				if(firstAry[i][j] > 0 && 
 				   firstAry[i - 1][j] == 0) {
 					System.out.println("In NorthThinning: " + i + " " + j);
 					DoThinning(i,j);
-					//copyAry();
 				}
 			}
 		}
+		copyAry();
 	}
 	
 	public void SouthThinning() {
-		for(int i = 1; i < numRows + 2; ++i) {
-			for(int j = 1; j < numCols + 2; ++j) {
-				if(firstAry[i][i] > 1 &&
+		for(int i = 1; i < numRows + 1; ++i) {
+			for(int j = 1; j < numCols + 1; ++j) {
+				if(firstAry[i][j] > 0 &&
 				   firstAry[i + 1][j] == 0) {
+					System.out.println("In SouthThinning: " + i + " " + j);
 					DoThinning(i,j);
 					
 				}
 			}
 		}
+		//copyAry();
 	}
 	
 	public void EastThinning() {
