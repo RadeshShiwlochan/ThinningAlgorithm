@@ -70,28 +70,22 @@ public class ThinningAlgrthm {
 		}
 	}
 	
-	public void prettyPrint(String outputFile) {
+	public void prettyPrint(PrintWriter printToFile) {
 		
-		try {
-			int pixel_value;
-			PrintWriter  printToFile = new PrintWriter(new File(outputFile));
-			//read in the input file
-			for(int i = 1; i <= numRows + 1; i++) {
-				for(int j = 1; j <= numCols + 1; j++) {
-					pixel_value = firstAry[i][j];
-				    if(pixel_value == 1) 
-						printToFile.print(pixel_value + " ");
-					else 
-					    printToFile.print("  ");
-				}
-				printToFile.println();
+		int pixel_value;
+		for(int i = 1; i <= numRows + 1; i++) {
+			for(int j = 1; j <= numCols + 1; j++) {
+				pixel_value = firstAry[i][j];
+				if(pixel_value == 1) 
+					printToFile.print(pixel_value + " ");
+				else 
+				    printToFile.print("  ");
 			}
 			printToFile.println();
-			printToFile.flush();
-			printToFile.close();
-		}catch(IOException ioe) {
-			System.out.println(ioe);
 		}
+		printToFile.println();
+		printToFile.flush();
+		printToFile.close();
 	}//prettyPrint method
 	
 	public void DoThinning(int rowIndex, int colIndex) {
@@ -199,7 +193,7 @@ public class ThinningAlgrthm {
 		return true;
 	}
 	
-	public void NorthThinning() {
+	public void NorthThinning(PrintWriter print_To_File) {
 		for(int i = 1; i < numRows + 2; ++i) {
 			for(int j = 1; j < numCols + 2; ++j) {
 				if(firstAry[i][j] > 0 && 
@@ -210,23 +204,27 @@ public class ThinningAlgrthm {
 			}
 		}
 		copyAry();
+		if(cycleCount == 0 || cycleCount == 3 || cycleCount == 5)
+			prettyPrintProgress(print_To_File, "North Thinning results");
+			
 	}
 	
-	public void SouthThinning() {
+	public void SouthThinning(PrintWriter print_To_File) {
 		for(int i = 1; i < numRows + 1; ++i) {
 			for(int j = 1; j < numCols + 1; ++j) {
 				if(firstAry[i][j] > 0 &&
 				   firstAry[i + 1][j] == 0) {
 					System.out.println("In SouthThinning: " + i + " " + j);
 					DoThinning(i,j);
-					
 				}
 			}
 		}
 		copyAry();
+		if(cycleCount == 0 || cycleCount == 3 || cycleCount == 5)
+			prettyPrintProgress(print_To_File, "South Thinning results");
 	}
 	
-	public void EastThinning() {
+	public void EastThinning(PrintWriter print_To_File) {
 		for(int i = 1; i < numRows + 1; ++i) {
 			for(int j = 1; j < numCols + 1; ++j) {
 				if(firstAry[i][j] > 0 && 
@@ -237,9 +235,11 @@ public class ThinningAlgrthm {
 			}
 		}
 		copyAry();
+		if(cycleCount == 0 || cycleCount == 3 || cycleCount == 5)
+			prettyPrintProgress(print_To_File, "East Thinning results");
 	}
 	
-	public void WestThinning() {
+	public void WestThinning(PrintWriter print_To_File) {
 		for(int i = 1; i < numRows + 1; ++i) {
 			for(int j = 1; j < numCols + 1; ++j) {
 				if(firstAry[i][j] > 0 && 
@@ -250,6 +250,8 @@ public class ThinningAlgrthm {
 			}
 		}
 		copyAry();
+		if(cycleCount == 0 || cycleCount == 3 || cycleCount == 5)
+			prettyPrintProgress(print_To_File, "West Thinning results");
 	}
 	
 	public void copyAry() {
@@ -259,8 +261,6 @@ public class ThinningAlgrthm {
 			}
 		}
 	}
-	
-	
 	
 	public int[] loadNghbrs(int rowIndex, int colIndex) {
 		int nghbrArr[] = new int[9];
@@ -276,19 +276,19 @@ public class ThinningAlgrthm {
 		return nghbrArr;
 	}
 	
-	public void ThinImage() {
+	public void ThinImage(PrintWriter print_To_File) {
 		
-		NorthThinning();
-		SouthThinning();
-		EastThinning();
-		WestThinning();
+		NorthThinning(print_To_File);
+		SouthThinning(print_To_File);
+		EastThinning(print_To_File);
+		WestThinning(print_To_File);
 		
 		while(changeFlag) {
 			changeFlag = false; 
-			NorthThinning();
-			SouthThinning();
-			EastThinning();
-			WestThinning();
+			NorthThinning(print_To_File);
+			SouthThinning(print_To_File);
+			EastThinning(print_To_File);
+			WestThinning(print_To_File);
 			if(!changeFlag)
 				break;
 		 }
@@ -316,32 +316,31 @@ public class ThinningAlgrthm {
 			}
 	}//printFirstArr
 	
-	public void printsecondtArr(String outputFile2) {
-		try {
-			PrintWriter printnum 
-						= new PrintWriter(new File(outputFile2));
-			int rowSize = numRows + 2, colSize = numCols + 2;
-			for(int i = 0; i < rowSize; ++i) {
-				for(int j = 0; j < colSize; ++j) {
-					printnum.print(secondAry[i][j] + " ");
-				}
-				printnum.println();
-			}
-			printnum.flush();
-			printnum.close();
-		}catch(IOException ioe) {
-			System.out.println(ioe);
-		}
-	}//printFirstArr
+	public void prettyPrintProgress(PrintWriter print_To_File, String whichMethod) {
 	
-	public void printy() {
-		int rowSize = numRows + 2, colSize = numCols + 2;
-		for(int i = 0; i < rowSize; ++i) {
-			for(int j = 0; j < colSize; ++j) {
-				System.out.print(firstAry[i][j] + " ");
+			int rowSize = numRows + 2, colSize = numCols + 2, pixel_value;
+			print_To_File.println(whichMethod);
+			
+//			for(int i = 0; i < rowSize; ++i) {
+//				for(int j = 0; j < colSize; ++j) {
+//					print_To_File.print(secondAry[i][j] + " ");
+//				}
+//				print_To_File.println();
+//			}
+			
+			for(int i = 1; i < rowSize; i++) {
+				for(int j = 1; j < colSize; j++) {
+					pixel_value = secondAry[i][j];
+					if(pixel_value == 1) 
+						print_To_File.print(pixel_value + " ");
+					else 
+					    print_To_File.print("  ");
+				}
+				print_To_File.println();
 			}
-			System.out.println();
-		}	
+			
+			print_To_File.flush();
+			print_To_File.close();
 	}//printFirstArr
 	
 }

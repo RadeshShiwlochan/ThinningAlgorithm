@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class Main extends ThinningAlgrthm {
 
@@ -10,15 +13,20 @@ public class Main extends ThinningAlgrthm {
 		String inputFile = args[0];
 		String outputFile = args[1];
 		String outputFile2 = args[2];
-		ThinningAlgrthm thinningAlg = new ThinningAlgrthm(inputFile);
-		thinningAlg.zeroFramed(thinningAlg.firstAry);
-		thinningAlg.zeroFramed(thinningAlg.secondAry);
-		thinningAlg.loadImage(inputFile);
-		thinningAlg.prettyPrint(outputFile2);
-		thinningAlg.ThinImage();
-		//prettyPrint result
-		thinningAlg.printResult(outputFile);
-		thinningAlg.printsecondtArr(outputFile2);
-		thinningAlg.printy();
+		try {
+			PrintWriter printToFile = new PrintWriter(new File(outputFile2));
+			ThinningAlgrthm thinningAlg = new ThinningAlgrthm(inputFile);
+			thinningAlg.zeroFramed(thinningAlg.firstAry);
+			thinningAlg.zeroFramed(thinningAlg.secondAry);
+			thinningAlg.loadImage(inputFile);
+			
+			thinningAlg.prettyPrint(printToFile);
+			thinningAlg.ThinImage(printToFile);
+			//prettyPrint result
+			thinningAlg.printResult(outputFile);
+			//thinningAlg.printsecondtArr(outputFile2);
+		} catch(IOException ioe) {
+			System.out.println(ioe);
+		}
 	}
 }
