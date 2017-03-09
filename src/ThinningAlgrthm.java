@@ -59,6 +59,7 @@ public class ThinningAlgrthm {
 				for(int j = 1; j <= numCols; j++) {
 					pixel_val = readFile.nextInt();
 					firstAry[i][j] = pixel_val;
+					secondAry[i][j] = pixel_val;
 			    }
 			}
 			readFile.close();
@@ -92,14 +93,98 @@ public class ThinningAlgrthm {
 	}//prettyPrint method
 	
 	public void DoThinning(int rowIndex, int colIndex) {
-		//check the second condition of if making the 
-		//pixel zero will create 2 connected components
 		
 		if(checkNghbrsNotZero(rowIndex,colIndex)) {
 			System.out.println("RowIndex: " + rowIndex + " colIndex: " + colIndex);
-			firstAry[rowIndex][colIndex] = 0;
+			secondAry[rowIndex][colIndex] = 0;
 			changeFlag = true;
 		}	
+		System.out.println("==================================================");
+	}
+	
+	public boolean checkNghbrsNotZero(int rowIndex, int colIndex) {
+		int counter = 0;
+		int [] nghbrArr = loadNghbrs(rowIndex,colIndex);
+		System.out.println(nghbrArr[0] + " " + nghbrArr[1] + " " + nghbrArr[2]);
+		System.out.println(nghbrArr[3] + " " + nghbrArr[4] + " " + nghbrArr[5]);
+		System.out.println(nghbrArr[6] + " " + nghbrArr[7] + " " + nghbrArr[8]);
+		
+		for(int i = 0; i < 9; ++i) {
+			if(nghbrArr[i] > 0)
+				counter++;
+		}
+		System.out.println("this is counter: " + counter);
+		if(counter <= 3) {
+			System.out.println("Returning false ===>");
+			return false;
+		}
+		
+		if(counter == 5 || counter == 6 ) {
+			if(nghbrArr[0] == 1 && nghbrArr[8] == 1 && nghbrArr[7] == 0 ||
+			   nghbrArr[1] == 1 && nghbrArr[7] == 1 ||
+			   nghbrArr[2] == 1 && nghbrArr[6] == 1 && nghbrArr[7] == 0 ||
+			   nghbrArr[3] == 1 && nghbrArr[5] == 1 && nghbrArr[7] == 0 ||  
+			   nghbrArr[0] == 1 && nghbrArr[6] == 1 && nghbrArr[3] == 0 ||
+			   nghbrArr[2] == 1 && nghbrArr[8] == 1 && nghbrArr[5] == 0 ||
+			   nghbrArr[6] == 1 && nghbrArr[8] == 1 && nghbrArr[7] == 0 ||
+			   nghbrArr[0] == 1 && nghbrArr[2] == 1 && nghbrArr[1] == 0 ||
+			   
+			   nghbrArr[1] == 1 && nghbrArr[6] == 1 && nghbrArr[3] == 0 ||
+			   nghbrArr[1] == 1 && nghbrArr[8] == 1 && nghbrArr[5] == 0 ||
+			   nghbrArr[0] == 1 && nghbrArr[7] == 1 && nghbrArr[3] == 0 ||
+			   nghbrArr[2] == 1 && nghbrArr[7] == 1 && nghbrArr[5] == 0 ||
+			   
+			   nghbrArr[2] == 1 && nghbrArr[3] == 1 && nghbrArr[1] == 0 ||
+			   nghbrArr[2] == 1 && nghbrArr[8] == 1 && nghbrArr[7] == 0 ||
+			   nghbrArr[0] == 1 && nghbrArr[5] == 1 && nghbrArr[1] == 0 ||
+			   nghbrArr[6] == 1 && nghbrArr[5] == 1 && nghbrArr[7] == 0 		
+		
+					) {
+				System.out.println("Returning false %%%%%%%%%%%%%%%%%%%%%%%%%");
+				System.out.println();
+				return false;
+			}
+				
+		}
+		
+		if(counter == 4) {
+			if(nghbrArr[2] == 1 && nghbrArr[8] == 1 && nghbrArr[4] == 1) {
+				System.out.println("Returning true for row: " + rowIndex + " col" + colIndex + " @@@@@@@@@");
+				return true;
+			}
+		}
+		
+		if(counter == 4) {
+			if(nghbrArr[0] == 1 && nghbrArr[8] == 1 ||
+			   nghbrArr[1] == 1 && nghbrArr[7] == 1 ||
+			   nghbrArr[2] == 1 && nghbrArr[6] == 1 ||
+			   nghbrArr[3] == 1 && nghbrArr[5] == 1 && nghbrArr[7] == 0 ||  
+			   nghbrArr[0] == 1 && nghbrArr[6] == 1 && nghbrArr[3] == 0 ||
+			   nghbrArr[2] == 1 && nghbrArr[8] == 1 && nghbrArr[5] == 0 ||
+			   nghbrArr[2] == 1 && nghbrArr[4] == 1 && nghbrArr[5] == 0 ||
+			   nghbrArr[6] == 1 && nghbrArr[8] == 1 && nghbrArr[7] == 0 ||
+			   nghbrArr[0] == 1 && nghbrArr[2] == 1 && nghbrArr[1] == 0 ||
+			   
+			   nghbrArr[1] == 1 && nghbrArr[6] == 1 && nghbrArr[3] == 0 ||
+			   nghbrArr[1] == 1 && nghbrArr[8] == 1 && nghbrArr[5] == 0 ||
+			   nghbrArr[0] == 1 && nghbrArr[7] == 1 && nghbrArr[3] == 0 ||
+			   nghbrArr[2] == 1 && nghbrArr[7] == 1 && nghbrArr[5] == 0 ||
+			   
+			   nghbrArr[2] == 1 && nghbrArr[3] == 1 && nghbrArr[1] == 0 ||
+			   nghbrArr[2] == 1 && nghbrArr[8] == 1 && nghbrArr[7] == 0 ||
+			   nghbrArr[0] == 1 && nghbrArr[5] == 1 && nghbrArr[1] == 0 ||
+			   nghbrArr[6] == 1 && nghbrArr[5] == 1 && nghbrArr[7] == 0 		
+		
+					) {
+				System.out.println("Returning false %%%%%%%%%%%%%%%%%%%%%%%%%");
+				System.out.println();
+				return false;
+			}
+			
+		}
+		
+		System.out.println("Returning true for row: " + rowIndex + " col" + colIndex + " @@@@@@@@@");
+		return true;
 	}
 	
 	public void NorthThinning() {
@@ -121,7 +206,7 @@ public class ThinningAlgrthm {
 				if(firstAry[i][i] > 1 &&
 				   firstAry[i + 1][j] == 0) {
 					DoThinning(i,j);
-					break;
+					
 				}
 			}
 		}
@@ -133,7 +218,6 @@ public class ThinningAlgrthm {
 				if(firstAry[i][i] > 1 && 
 				   firstAry[i][j + 1] == 0) {
 					DoThinning(i,j);
-					break;
 				}
 			}
 		}
@@ -145,7 +229,7 @@ public class ThinningAlgrthm {
 				if(firstAry[i][i] > 1 && 
 				   firstAry[i][j - 1] == 0) {
 					DoThinning(i,j);
-					break;
+
 				}
 			}
 		}	
@@ -160,52 +244,7 @@ public class ThinningAlgrthm {
 		}
 	}
 	
-	public boolean checkNghbrsNotZero(int rowIndex, int colIndex) {
-		int counter = 0;
-		int [] nghbrArr = loadNghbrs(rowIndex,colIndex);
-		System.out.println(nghbrArr[0] + " " + nghbrArr[1] + " " + nghbrArr[2]);
-		System.out.println(nghbrArr[3] + " " + nghbrArr[4] + " " + nghbrArr[5]);
-		System.out.println(nghbrArr[6] + " " + nghbrArr[7] + " " + nghbrArr[8]);
-		
-		for(int i = 0; i < 9; ++i) {
-			if(nghbrArr[i] > 0)
-				counter++;
-		}
-		System.out.println("this is counter: " + counter);
-		if(counter < 3) {
-			System.out.println("Returning false ===>");
-			return false;
-		}
-		
-		if(counter >= 3) {
-			if(nghbrArr[0] == 1 && nghbrArr[8] == 1 ||
-			   nghbrArr[1] == 1 && nghbrArr[7] == 1 ||
-			   nghbrArr[2] == 1 && nghbrArr[6] == 1 ||
-			   nghbrArr[3] == 1 && nghbrArr[5] == 1 ||  
-			   nghbrArr[0] == 1 && nghbrArr[6] == 1 && nghbrArr[3] == 0 ||
-			   nghbrArr[2] == 1 && nghbrArr[8] == 1 && nghbrArr[5] == 0 ||
-			   nghbrArr[6] == 1 && nghbrArr[8] == 1 && nghbrArr[7] == 0 ||
-			   nghbrArr[0] == 1 && nghbrArr[2] == 1 && nghbrArr[1] == 0 ||
-			   
-			   nghbrArr[1] == 1 && nghbrArr[6] == 1 && nghbrArr[3] == 0 ||
-			   nghbrArr[1] == 1 && nghbrArr[8] == 1 && nghbrArr[5] == 0 ||
-			   nghbrArr[0] == 1 && nghbrArr[7] == 1 && nghbrArr[3] == 0 ||
-			   nghbrArr[2] == 1 && nghbrArr[7] == 1 && nghbrArr[5] == 0 ||
-			   
-			   nghbrArr[2] == 1 && nghbrArr[3] == 1 && nghbrArr[1] == 0 ||
-			   nghbrArr[2] == 1 && nghbrArr[8] == 1 && nghbrArr[7] == 0 ||
-			   nghbrArr[0] == 1 && nghbrArr[5] == 1 && nghbrArr[1] == 0 ||
-			   nghbrArr[6] == 1 && nghbrArr[5] == 1 && nghbrArr[7] == 0 		
-		
-					) {
-				System.out.println("Returning false");
-				return false;
-			}
-			
-		} 
-		System.out.println("Returning true for row: " + rowIndex + " col" + colIndex);
-		return true;
-	}
+	
 	
 	public int[] loadNghbrs(int rowIndex, int colIndex) {
 		int nghbrArr[] = new int[9];
