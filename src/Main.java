@@ -18,6 +18,8 @@ public class Main extends ThinningAlgrthm {
 		
 		thinningAlg.NorthThinning();
 		thinningAlg.SouthThinning();
+		thinningAlg.EastThinning();
+		thinningAlg.WestThinning();
 		thinningAlg.printFirstArr(outputFile);
 		thinningAlg.printsecondtArr(outputFile2);
 		thinningAlg.printy();

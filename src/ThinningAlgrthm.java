@@ -120,7 +120,8 @@ public class ThinningAlgrthm {
 		}
 		
 		if(counter == 5 || counter == 6 ) {
-			if(nghbrArr[2] == 1 && nghbrArr[8] == 1 && nghbrArr[5] == 1 || nghbrArr[1] == 1) {
+			if(nghbrArr[2] == 1 && nghbrArr[8] == 1 && nghbrArr[5] == 1 || nghbrArr[1] == 1 ||
+			   nghbrArr[6] == 1 && nghbrArr[8] == 1 && nghbrArr[4] == 1) {
 				System.out.println("Returning true for row: " + rowIndex + " col" + colIndex + " @@@@@@@@@");
 				return true;
 			}
@@ -220,30 +221,33 @@ public class ThinningAlgrthm {
 				}
 			}
 		}
-		//copyAry();
+		copyAry();
 	}
 	
 	public void EastThinning() {
-		for(int i = 1; i < numRows + 2; ++i) {
-			for(int j = 1; j < numCols + 2; ++j) {
-				if(firstAry[i][i] > 1 && 
+		for(int i = 1; i < numRows + 1; ++i) {
+			for(int j = 1; j < numCols + 1; ++j) {
+				if(firstAry[i][j] > 0 && 
 				   firstAry[i][j + 1] == 0) {
+					System.out.println("In EastThinning: " + i + " " + j);
 					DoThinning(i,j);
 				}
 			}
 		}
+		copyAry();
 	}
 	
 	public void WestThinning() {
-		for(int i = 1; i < numRows + 2; ++i) {
-			for(int j = 1; j < numCols + 2; ++j) {
-				if(firstAry[i][i] > 1 && 
+		for(int i = 1; i < numRows + 1; ++i) {
+			for(int j = 1; j < numCols + 1; ++j) {
+				if(firstAry[i][j] > 0 && 
 				   firstAry[i][j - 1] == 0) {
+					System.out.println("In WestThinning: " + i + " " + j);
 					DoThinning(i,j);
-
 				}
 			}
-		}	
+		}
+		//copyAry();
 	}
 	
 	public void copyAry() {
