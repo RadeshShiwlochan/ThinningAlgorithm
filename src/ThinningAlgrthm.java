@@ -18,6 +18,8 @@ public class ThinningAlgrthm {
 			numCols = input.nextInt();
 			minVal  = input.nextInt();
 			maxVal  = input.nextInt();
+			changeFlag = true;
+			cycleCount = 0;
 			
 			int rowSize = numRows + 2, colSize = numCols + 2;
 			firstAry = new int[rowSize][colSize];
@@ -247,11 +249,10 @@ public class ThinningAlgrthm {
 				}
 			}
 		}
-		//copyAry();
+		copyAry();
 	}
 	
 	public void copyAry() {
-		//firstAry = secondAry;
 		for(int i = 0; i < numRows + 2; ++i) {
 			for(int j = 0; j < numCols + 2; ++j) {
 				firstAry[i][j] = secondAry[i][j];
@@ -273,6 +274,17 @@ public class ThinningAlgrthm {
 		nghbrArr[7] = firstAry[rowIndex + 1][colIndex];
 		nghbrArr[8] = firstAry[rowIndex + 1][colIndex + 1];
 		return nghbrArr;
+	}
+	
+	public void ThinImage() {
+		int count = 0;
+		while(changeFlag && count == 0) {
+			NorthThinning();
+			SouthThinning();
+			EastThinning();
+			WestThinning();
+			count++;
+		}
 	}
 	
 	public void printFirstArr(String outputFile) {
@@ -312,15 +324,13 @@ public class ThinningAlgrthm {
 	}//printFirstArr
 	
 	public void printy() {
-		
-			int rowSize = numRows + 2, colSize = numCols + 2;
-			for(int i = 0; i < rowSize; ++i) {
-				for(int j = 0; j < colSize; ++j) {
-					System.out.print(firstAry[i][j] + " ");
-				}
-				System.out.println();
+		int rowSize = numRows + 2, colSize = numCols + 2;
+		for(int i = 0; i < rowSize; ++i) {
+			for(int j = 0; j < colSize; ++j) {
+				System.out.print(firstAry[i][j] + " ");
 			}
-			
+			System.out.println();
+		}	
 	}//printFirstArr
 	
 }
