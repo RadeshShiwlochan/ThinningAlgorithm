@@ -18,7 +18,7 @@ public class ThinningAlgrthm {
 			numCols = input.nextInt();
 			minVal  = input.nextInt();
 			maxVal  = input.nextInt();
-			changeFlag = true;
+			changeFlag = false;
 			cycleCount = 0;
 			
 			int rowSize = numRows + 2, colSize = numCols + 2;
@@ -277,21 +277,32 @@ public class ThinningAlgrthm {
 	}
 	
 	public void ThinImage() {
-		int count = 0;
-		while(changeFlag && count == 0) {
+		
+		NorthThinning();
+		SouthThinning();
+		EastThinning();
+		WestThinning();
+		
+		while(changeFlag) {
+			changeFlag = false; 
 			NorthThinning();
 			SouthThinning();
 			EastThinning();
 			WestThinning();
-			count++;
-		}
+			if(!changeFlag)
+				break;
+		 }
 	}
 	
-	public void printFirstArr(String outputFile) {
+	public void printResult(String outputFile) {
 		try {
 			PrintWriter printToFile 
 						= new PrintWriter(new File(outputFile));
 			int rowSize = numRows + 2, colSize = numCols + 2;
+			
+			printToFile.println(numRows + "  " + numCols + "  " +
+			minVal + "  " + maxVal);
+			printToFile.println();
 			for(int i = 0; i < rowSize; ++i) {
 				for(int j = 0; j < colSize; ++j) {
 					printToFile.print(firstAry[i][j] + " ");
